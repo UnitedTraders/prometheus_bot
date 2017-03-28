@@ -1,4 +1,4 @@
-SHELL := /bin/bash
+SHELL := /bin/bash -l
 VERSION=`git describe --abbrev=0 --tags`
 TARGET=prometheus_bot
 TARGET_PACK=prometheus-bot
