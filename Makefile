@@ -4,6 +4,7 @@ TARGET=prometheus_bot
 TARGET_PACK=prometheus-bot
 
 all: main.go
+	go get ./...
 	go build -o $(TARGET)
 test: all
 	prove -v
