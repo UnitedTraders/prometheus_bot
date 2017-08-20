@@ -5,10 +5,12 @@ TARGET_PACK=prometheus-bot
 
 all: main.go
 	go build -o $(TARGET)
-test:
+test: all
 	prove -v
 clean:
+	go clean
 	rm -f $(TARGET)
+	rm -f bot.log
 	rm -f $(TARGET_PACK)*.deb
 	rm -f $(TARGET_PACK)*.rpm
 pack_deb:
