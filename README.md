@@ -24,6 +24,7 @@ make
     template_path: "template.tmpl" # ONLY IF YOU USING TEMPLATE
     time_zone: "Europe/Rome" # ONLY IF YOU USING TEMPLATE
     split_msg_byte: 4000
+    send_only: true # use bot only to send messages.
     ```
 
 3. Run ```telegram_bot```. See ```prometheus_bot --help``` for command line options
@@ -39,10 +40,12 @@ Alert manager configuration file:
 - name: 'admins'
   webhook_configs:
   - send_resolved: True
-    url: http://127.0.0.1:9087/alert/-chat_id
+    url: http://127.0.0.1:9087/alert/chat_id
 ```
 
-Replace ```-chat_id``` with the number you got from your bot, with ```-```. To use multiple chats just add more receivers.
+Replace ```chat_id``` with the value you got from your bot, ***with everything inside the quotes***.
+(Some chat_id's start with a ```-```, in this case, you must also include the ```-``` in the url)
+To use multiple chats just add more receivers.
 
 ## Test
 
@@ -54,7 +57,7 @@ To run tests with `make test` you have to:
 - Ensure port `9087` on localhost is available to bind to
 
 ```bash
-export TELEGRAM_CHATID="-YOUR TELEGRAM CHAT ID"
+export TELEGRAM_CHATID="YOUR TELEGRAM CHAT ID"
 make test
 ```
 ### Create your own test
@@ -65,7 +68,7 @@ Test will send ```*.json``` file into ```testdata``` folder
 or
 
 ```sh
-TELEGRAM_CHATID="-YOUR TELEGRAM CHAT ID" make test
+TELEGRAM_CHATID="YOUR TELEGRAM CHAT ID" make test
 ```
 
 ## Customising messages with template
