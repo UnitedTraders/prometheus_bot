@@ -6,8 +6,15 @@ node {
 
 	// Export environment variables pointing to the directory where Go was installed
 	withEnv(["GOROOT=${root}", "PATH+GO=${root}/bin"]) {
-		stage('Checkout')
-		checkout scm
+		stage('Checkout') 
+        checkout([
+        	$class: 'GitSCM',
+        	branches: scm.branches,
+        	doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
+        	extensions: scm.extensions + [[$class: 'CloneOption', noTags: false, reference: '', shallow: true]],
+        	submoduleCfg: [],
+        	userRemoteConfigs: scm.userRemoteConfigs
+        ])
 		stage('Build')
 		sh 'make'
 		stage('Pack RPM')
