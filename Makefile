@@ -1,5 +1,6 @@
 SHELL := /bin/bash
 VERSION=`git describe --abbrev=0 --tags`
+PWD=`pwd`
 TARGET=prometheus_bot
 TARGET_PACK=prometheus-bot
 
@@ -14,6 +15,6 @@ clean:
 	rm -f $(TARGET_PACK)*.deb
 	rm -f $(TARGET_PACK)*.rpm
 pack_deb:
-	fpm -s dir -t deb --force -n $(TARGET) -v $(VERSION) --prefix /opt/$(TARGET) $(TARGET)
+	docker run -v $(PWD)/:/opt/$(TARGET) -w /opt/$(TARGET) alanfranz/fpm-within-docker:centos-7 fpm -s dir -t deb -p /opt/$(TARGET) --force -n $(TARGET) -v $(VERSION) --prefix /opt/$(TARGET) $(TARGET)
 pack_rpm:
-	fpm -s dir -t rpm --force -n $(TARGET) -v $(VERSION) --prefix /opt/$(TARGET) $(TARGET)
+	docker run -v $(PWD)/:/opt/$(TARGET) -w /opt/$(TARGET) alanfranz/fpm-within-docker:centos-7 fpm -s dir -t rpm -p /opt/$(TARGET) --force -n $(TARGET) -v $(VERSION) --prefix /opt/$(TARGET) $(TARGET)
